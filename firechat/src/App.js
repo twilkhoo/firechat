@@ -6,23 +6,21 @@ import './App.css';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
-import 'firebase/compat/analytics';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 firebase.initializeApp({
-    apiKey: "AIzaSyDJ4QF_-erQQt9dTY94U86JSECuZi-OH5I",
-    authDomain: "globoo-bookmarks.firebaseapp.com",
-    projectId: "globoo-bookmarks",
-    storageBucket: "globoo-bookmarks.appspot.com",
-    messagingSenderId: "707880529483",
-    appId: "1:707880529483:web:dde471df37562504e9a7ce"
+    apiKey: "AIzaSyCCvx_FfeAGv3eJsbgXuuo5cUdvqRpGGJE",
+    authDomain: "firechat-8758a.firebaseapp.com",
+    projectId: "firechat-8758a",
+    storageBucket: "firechat-8758a.appspot.com",
+    messagingSenderId: "401282479405",
+    appId: "1:401282479405:web:57d899dac6add18116cfa4"
 })
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
-const analytics = firebase.analytics();
 // Required Firebase/hooks imports ^^^^^^^^^^^
 
 
@@ -32,7 +30,7 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
-
+                <SignOut />
             </header>
 
             <section>
@@ -50,14 +48,16 @@ function SignIn() {
     }
 
     return (
-        <button onClick={signInWithGoogle}>Sign in with Google</button>
+        <>
+        <button className="sign-in" onClick={signInWithGoogle}>Sign in with Google</button>
+        </>
     )
 }
 
 function SignOut() {
     return auth.currentUser && (
 
-        <button onclick={auth.signOut()}>Sign Out</button>
+        <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
     )
 }
 
@@ -111,7 +111,7 @@ function ChatMessage(props) {
 
     return (
         <div className={`message ${messageClass}`}>
-            <img src={photoURL} />
+            <img src={photoURL} alt='user profile pic'/>
             <p>{text}</p>
         </div>
     )
