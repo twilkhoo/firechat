@@ -1,14 +1,15 @@
+import React, { useRef, useState } from 'react';
 import './App.css';
 
 
 // Required Firebase/hooks imports vvvvvvvvvvvvv
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import 'firebase/compat/auth';
+import 'firebase/compat/analytics';
 
-import { authState } from 'react-firebase-hooks/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-// Required Firebase/hooks imports ^^^^^^^^^^^
 
 firebase.initializeApp({
     apiKey: "AIzaSyDJ4QF_-erQQt9dTY94U86JSECuZi-OH5I",
@@ -21,11 +22,12 @@ firebase.initializeApp({
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
-
+const analytics = firebase.analytics();
+// Required Firebase/hooks imports ^^^^^^^^^^^
 
 
 function App() {
-    const [user] = useAuthState();
+    const [user] = useAuthState(auth);
 
     return (
         <div className="App">
@@ -65,9 +67,23 @@ function ChatRoom() {
 
     const [messages] = useCollectionData(query, {idField: 'id'});
 
+    return (
+        <>
+            <div>
+                {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg}/>)}
+            </div>
+            <div>
+
+            </div>
+        </>
+    )
+}
+
+function ChatMessage(props) {
+    const { text, uid } = props.message;
     
 
-
+    return <p>{text}</p>
 }
 
 
